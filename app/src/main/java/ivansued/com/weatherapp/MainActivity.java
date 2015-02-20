@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -59,8 +58,19 @@ public class MainActivity extends ActionBarActivity {
             });
             Log.d(TAG, "Main UI Code is running");
         }else{
-            Toast.makeText(this, getString(R.string.network_unavailable_message), Toast.LENGTH_LONG).show();
+            /*Bundle args = new Bundle();
+            args.putString("errorType", "networkConnection");
+            AlertDialogFragment dialog = new AlertDialogFragment();
+            dialog.setArguments(args);*/
+            alertUserAboutNetworkError();
+            //Toast.makeText(this, getString(R.string.network_unavailable_message), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void alertUserAboutNetworkError() {
+        AlertDialogFragment dialog = AlertDialogFragment
+                .newInstance(getString(R.string.network_connection_error), getString(R.string.network_connection_message));
+        dialog.show(getFragmentManager(), "network_error_message");
     }
 
     private boolean isNetworkAvailable() {
@@ -76,7 +86,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void alertUserAboutError() {
-        AlertDialogFragment dialog = new AlertDialogFragment();
+        AlertDialogFragment dialog = AlertDialogFragment
+                .newInstance(getString(R.string.error_title), getString(R.string.error_message));
         dialog.show(getFragmentManager(), "error_dialog");
     }
 }
