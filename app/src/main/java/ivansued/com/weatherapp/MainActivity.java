@@ -2,6 +2,10 @@ package ivansued.com.weatherapp;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -27,12 +32,11 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements LocationListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     private CurrentWeather mCurrentWeather;
 
-    @InjectView(R.id.timeLabel)
-    TextView mTimeLabel;
+    @InjectView(R.id.timeLabel) TextView mTimeLabel;
     @InjectView(R.id.temperatureLabel) TextView mTemperatureLabel;
     @InjectView(R.id.humidityValue) TextView mHumidityValue;
     @InjectView(R.id.precipValue) TextView mPrecipValue;
@@ -40,25 +44,54 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.iconImageView) ImageView mIconImageView;
     @InjectView(R.id.refreshImageView) ImageView mRefreshImageView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+    @InjectView(R.id.locationLabel) TextView mLocationLabel;
+
+    private double mLatitude = 37.8267;
+    private double mLongitude = -122.423;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        Criteria cri=new Criteria();
+        String provider=locationManager.getBestProvider(cri,false);
+
+        if(provider!=null & !provider.equals(""))
+        {
+            locationManager.requestLocationUpdates(provider, 2000, 1, this);
+            Location location=locationManager.getLastKnownLocation(provider);
+
+            if(location!=null)
+            {
+                onLocationChanged(location);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "location not found", Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Provider is null",Toast.LENGTH_LONG).show();
+        }
+
+
+
         ButterKnife.inject(this);
         mProgressBar.setVisibility(View.INVISIBLE);
-        final double latitude = 37.8267;
-        final double longitude = -122.423;
+//        final double latitude = 37.8267;
+//        final double longitude = -122.423;
 
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getForecast(latitude, longitude);
+                getForecast(mLatitude, mLongitude);
             }
         });
 
-        getForecast(latitude, longitude);
+        getForecast(mLatitude, mLongitude);
     }
 
     private void getForecast(double latitude, double longitude) {
@@ -134,8 +167,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void updateDisplay() {
+        mLocationLabel.setText(mCurrentWeather.getTimeZone()+"");
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
-        mTimeLabel.setText("At" + mCurrentWeather.getFormattedTime() + " it will be");
+        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
         mHumidityValue.setText(mCurrentWeather.getHumidity()+"");
         mPrecipValue.setText(mCurrentWeather.getPrecipChance()+"%");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
@@ -186,5 +220,26 @@ public class MainActivity extends ActionBarActivity {
         AlertDialogFragment dialog = AlertDialogFragment
                 .newInstance(getString(R.string.error_title), getString(R.string.error_message));
         dialog.show(getFragmentManager(), "error_dialog");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLatitude = location.getLatitude();
+        mLongitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
