@@ -1,13 +1,15 @@
-package ivansued.com.weatherapp;
+package ivansued.com.weatherapp.weather;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import ivansued.com.weatherapp.R;
+
 /**
  * Created by isued on 2/23/2015.
  */
-public class CurrentWeather {
+public class Current {
     private String mIcon;
     private long mTime;
     private double mTemperature;

@@ -1,4 +1,4 @@
-package ivansued.com.weatherapp;
+package ivansued.com.weatherapp.weather;
 
 /**
  * Created by isued on 4/7/2015.

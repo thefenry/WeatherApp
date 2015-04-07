@@ -1,22 +1,14 @@
-package ivansued.com.weatherapp;
+package ivansued.com.weatherapp.weather;
 
 /**
  * Created by isued on 4/7/2015.
  */
-public class Day {
+public class Hour {
     private long mTime;
     private String mSummary;
     private double mTemperature;
     private String mIcon;
     private String mTimezone;
-
-    public String getTimezone() {
-        return mTimezone;
-    }
-
-    public void setTimezone(String timezone) {
-        mTimezone = timezone;
-    }
 
     public long getTime() {
         return mTime;
@@ -48,5 +40,13 @@ public class Day {
 
     public void setIcon(String icon) {
         mIcon = icon;
+    }
+
+    public String getTimezone() {
+        return mTimezone;
+    }
+
+    public void setTimezone(String timezone) {
+        mTimezone = timezone;
     }
 }

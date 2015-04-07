@@ -1,10 +1,12 @@
-package ivansued.com.weatherapp;
+package ivansued.com.weatherapp.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+
+import ivansued.com.weatherapp.R;
 
 /**
  * Created by isued on 2/20/2015.

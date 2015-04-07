@@ -1,4 +1,4 @@
-package ivansued.com.weatherapp;
+package ivansued.com.weatherapp.ui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -30,6 +30,8 @@ import java.io.IOException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import ivansued.com.weatherapp.R;
+import ivansued.com.weatherapp.weather.Current;
 
 
 public class MainActivity extends ActionBarActivity implements LocationListener {
