@@ -4,8 +4,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:background="#ffaa00"
-                android:paddingLeft="64dp"
-                android:paddingRight="32dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="16dp"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                                             >
