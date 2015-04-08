@@ -9,4 +9,8 @@
     <string name="network_unavailable_message">Network is unavailable</string>
     <string name="network_connection_error">Network Error!</string>
     <string name="network_connection_message">It seems that your network is unavailable. Please check your settings and try again.</string>
+    <string name="day_button_text">7 DAY</string>
+    <string name="hourly_button_text">HOURLY</string>
+    <string name="title_activity_daily_forecast">DailyForecastActivity</string>
+    <string name="no_daily_forecast_data">There is no data to display</string>
 </resources>
