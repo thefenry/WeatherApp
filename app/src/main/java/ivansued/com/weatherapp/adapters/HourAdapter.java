@@ -1,66 +1,51 @@
 package ivansued.com.weatherapp.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import ivansued.com.weatherapp.R;
 import ivansued.com.weatherapp.weather.Hour;
 
 /**
  * Created by isued on 4/9/2015.
  */
-public class HourAdapter extends BaseAdapter {
-    private Context mContext;
-    private Hour[] mHours;
+public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder> {
 
-    public HourAdapter(Context context, Hour[] hours){
-        mContext = context;
-        mHours = hours;
+
+    @Override
+    public HourViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        return null;
     }
 
     @Override
-    public int getCount() {
-        return mHours.length;
+    public void onBindViewHolder(HourViewHolder hourViewHolder, int i) {
+
     }
 
     @Override
-    public Object getItem(int position) {
-        return mHours[position];
-    }
-
-    @Override
-    public long getItemId(int position) {
+    public int getItemCount() {
         return 0;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+    public class HourViewHolder extends RecyclerView.ViewHolder{
+        public TextView mTimeLabel;
+        public TextView mSummaryLabel;
+        public TextView mTemperatureLabel;
+        public ImageView mIconImageView;
 
-        if(convertView == null){
-            //brand new
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.daily_list_item, null);
-            holder = new ViewHolder();
-            holder.iconImageView = (ImageView) convertView.findViewById(R.id.iconImageView);
-            holder.temperatureLabel = (TextView) convertView.findViewById(R.id.temperatureLabel);
-            holder.dayLabel = (TextView) convertView.findViewById(R.id.dayNameLabel);
+        public HourViewHolder(View itemView) {
+            super(itemView);
 
-            convertView.setTag(holder);
-        }else{
-            holder = (ViewHolder) convertView.getTag();
+            mTimeLabel = (TextView) itemView.findViewById(R.id.timeLabel);
+            mSummaryLabel = (TextView) itemView.findViewById(R.id.summaryLabel);
+            mTemperatureLabel = (TextView) itemView.findViewById(R.id.temperatureLabel);
+            mIconImageView = (ImageView) itemView.findViewById(R.id.iconImageView);
+            
         }
-
-        Hour hour = mHours[position];
-        holder.iconImageView.setImageResource((day.getIconId()));
-        holder.temperatureLabel.setText(day.getTemperatureMax() + "");
-
-        if (position == 0){
-            holder.dayLabel.setText("Today");
-        }else{
-            holder.dayLabel.setText(day.getDayOfTheWeek());
-        }
-
-        return convertView;
     }
 }
