@@ -26,7 +26,6 @@ public class HourlyForecastActivity extends ListActivity {
         Parcelable[] parcelables = intent.getParcelableArrayExtra(MainActivity.HOURLY_FORECAST);
         mHours = Arrays.copyOf(parcelables, parcelables.length, Hour[].class);
 
-        HourAdapter adapter = new HourAdapter(this, mHours);
-        setListAdapter(adapter);
+        
     }
 }
