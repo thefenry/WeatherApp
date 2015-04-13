@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ivansued.com.weatherapp.R;
 import ivansued.com.weatherapp.weather.Hour;
@@ -18,9 +19,11 @@ import ivansued.com.weatherapp.weather.Hour;
 public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder> {
 
     private Hour[] mHours;
-
-    public HourAdapter(Hour [] hours){
+    private Context mContext;
+    //We are passing a context from the Hourly forecast since we need the context for the Toast.
+    public HourAdapter(Context context, Hour [] hours){
         mHours = hours;
+        mContext = context;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder
         return mHours.length;
     }
 
-    public class HourViewHolder extends RecyclerView.ViewHolder{
+    public class HourViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView mTimeLabel;
         public TextView mSummaryLabel;
         public TextView mTemperatureLabel;
@@ -55,6 +58,8 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder
             mTemperatureLabel = (TextView) itemView.findViewById(R.id.temperatureLabel);
             mIconImageView = (ImageView) itemView.findViewById(R.id.iconImageView);
 
+            //This sets the onclick listener on the viewholder method below.
+            itemView.setOnClickListener(this);
         }
 
         public void bindHour(Hour hour){
@@ -62,6 +67,19 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder
             mSummaryLabel.setText(hour.getSummary());
             mTemperatureLabel.setText(hour.getTemperature() + "");
             mIconImageView.setImageResource(hour.getIconId());
+        }
+
+        //This is the onclick listener that will set the message. We need to set the listener above
+        // or it will never run.
+        @Override
+        public void onClick(View v) {
+            String time = mTimeLabel.getText().toString();
+            String temperature = mTemperatureLabel.getText().toString();
+            String summary = mSummaryLabel.getText().toString();
+            String message = String.format("At %s it will be %s and %s",
+                    time, temperature, summary);
+
+            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
         }
     }
 }
